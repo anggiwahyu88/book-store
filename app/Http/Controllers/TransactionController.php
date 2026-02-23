@@ -19,24 +19,24 @@ class TransactionController extends Controller
     }
     function getSnapToken(Request $request)
     {
-        $id_book =  $request->id_book;
-        $book = Book::find($id_book, 'price')->first();
-        \Midtrans\Config::$serverKey = config('mitrands.serverKey');
-        \Midtrans\Config::$isProduction = false;
-        \Midtrans\Config::$isSanitized = true;
-        \Midtrans\Config::$is3ds = true;
+        // $id_book =  $request->id_book;
+        // $book = Book::find($id_book, 'price')->first();
+        // \Midtrans\Config::$serverKey = config('mitrands.serverKey');
+        // \Midtrans\Config::$isProduction = false;
+        // \Midtrans\Config::$isSanitized = true;
+        // \Midtrans\Config::$is3ds = true;
 
-        $params = array(
-            'transaction_details' => array(
-                'order_id' => rand(),
-                'gross_amount' => (int) $book->price,
-                'id_book' => $id_book,
-                'id_member' => Auth::guard('member')->user()->id,
-            )
-        );
-        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        // $params = array(
+        //     'transaction_details' => array(
+        //         'order_id' => rand(),
+        //         'gross_amount' => (int) $book->price,
+        //         'id_book' => $id_book,
+        //         'id_member' => Auth::guard('member')->user()->id,
+        //     )
+        // );
+        // $snapToken = \Midtrans\Snap::getSnapToken($params);
         return response()->json([
-            'token' => $snapToken,
+            'token' => "snapToken",
         ]);
     }
     function transactionSuccses(Request $request)

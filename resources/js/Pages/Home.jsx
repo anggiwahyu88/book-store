@@ -12,29 +12,35 @@ export default function Home({ books }) {
     event.stopPropagation();
     const id_book = id || dataDetailBook.id
 
-    const response = await fetch("/transaction/pay", {
+    // const response = await fetch("/transaction/pay", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "X-CSRF-TOKEN": csrf_token
+    //   },
+    //   body: JSON.stringify({ id_book })
+    // })
+    // const data = await response.json()
+
+    // window.snap.pay(data.token, {
+    //   onSuccess: async function (result) {
+    function random5DigitString() {
+      return Math.floor(Math.random() * 100000)
+        .toString()
+        .padStart(5, "0");
+    }
+
+    const response = await fetch("/transaction/succses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "X-CSRF-TOKEN": csrf_token
       },
-      body: JSON.stringify({ id_book })
+      body: JSON.stringify({ id_book, order_id: random5DigitString() })
     })
-    const data = await response.json()
-
-    window.snap.pay(data.token, {
-      onSuccess: async function (result) {
-        const response = await fetch("/transaction/succses", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": csrf_token
-          },
-          body: JSON.stringify({ id_book, order_id:result.order_id })
-        })
-        router.visit("/koleksi")
-      },
-    });
+    router.visit("/koleksi")
+    //   },
+    // });
     document.getElementById("btn-close").click()
   }
   return (
